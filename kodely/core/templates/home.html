@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+  {%load static%}
   <title>Home</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    h2 { margin-bottom: 10px; }
-    ul { list-style: none; padding: 0; }
-    li { margin-bottom: 10px; }
-    a { text-decoration: none; color: #2b579a; }
-    a:hover { text-decoration: underline; }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-  <p>Ya estás logueado exitosamente</p>
+  <header class="header">
+    <div class="logo">
+  <img src="{% static 'img/logo.svg' %}" alt="Kodely Logo" class="logo-img">
+</div>
+    <div class="header-actions">
+      <a class= "create-account"href="#">Iniciar Sesión</a>
+      <button class="create-account">Crear Cuenta</button>
+    </div>
+  </header>
 
-  <h2>Últimos posts</h2>
-  <ul>
+  <main class="container">
+
+    <h2>Últimos posts</h2>
+
     {% for post in posts %}
-      <li>
-        <a href="{% url 'ver_post' post.id %}">{{ post.title }}</a><br>
-        <small>Autor: {{ post.author.name }}</small>
-      </li>
+      <div class="post-card">
+        <div class="user-info">
+          <div class="avatar"></div>
+          <div class="user-details">
+            <div><strong>{{ post.author.name }}</strong></div>
+            <div>{{ post.created_at|date:"M d" }}</div>
+          </div>
+        </div>
+        <div class="post-title">
+          <a class="post-link" href="{% url 'ver_post' post.id %}">{{ post.title }}</a>
+        </div>
+        <div class="reactions">5 Reacciones</div>
+      </div>
     {% empty %}
-      <p>No hay posts aún.</p>
-    {% endfor %}
-  </ul>
+      <p class="empty-msg">No hay posts aún.</p>
+    {% endfor %}
+  </main>
 </body>
 </html>
